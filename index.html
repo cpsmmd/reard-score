@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+  <link rel="stylesheet" type="text/css" href="./static/style/base.css">
+  <!-- <link rel="Shortcut Icon" href="./static//images//logo.png"> -->
+  <!-- <link rel="Bookmark" href="./static//images//logo.png"> -->
+  <title>2021REARD评选系统</title>
+  <script>
+    var isIE = function () {
+      return window.navigator.userAgent.indexOf('MSIE') >= 1
+    }
+
+    // 修复IE10及以下版本不支持dataset属性的问题，兼容iview中transfer-dom.js中使用了dataset的问题
+    if (isIE() && window.HTMLElement) {
+      if (
+        Object.getOwnPropertyNames(HTMLElement.prototype).indexOf(
+          'dataset'
+        ) === -1
+      ) {
+        Object.defineProperty(HTMLElement.prototype, 'dataset', {
+          get: function () {
+            var attributes = this.attributes
+            var name = []
+            var value = []
+            var obj = {}
+            for (var i = 0; i < attributes.length; i++) {
+              if (attributes[i].nodeName.slice(0, 5) === 'data-') {
+                name.push(attributes[i].nodeName.slice(5))
+                value.push(attributes[i].nodeValue)
+              }
+            }
+            for (var j = 0; j < name.length; j++) {
+              obj[name[j]] = value[j]
+            }
+            return obj
+          }
+        })
+      }
+    }
+
+  </script>
+</head>
+
+<body style="height: 100%;">
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+</body>
+
+</html>
