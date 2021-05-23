@@ -23,7 +23,7 @@ body {
   padding: 0;
 }
 ::-webkit-scrollbar {
-  display: none;
+  /* display: none; */
 }
 [v-cloak] {
   display: none;

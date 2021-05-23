@@ -6,7 +6,7 @@
   >
     <div class="login_box">
       <div style="text-align: center;font-size:24px;margin-bottom:30px;">
-        2021REARD评选系统
+        2021REARD评委管理
       </div>
       <Form
         style="text-align: center;"
@@ -81,7 +81,7 @@ export default {
     handleSubmit (name) {
       this.$ajax(this, {
         data: {
-          op: 'p10101',
+          op: 'c30101',
           account: this.formInline.user,
           passwd: hex_md5(this.formInline.password)
         }

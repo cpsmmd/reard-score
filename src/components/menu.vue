@@ -105,13 +105,13 @@ export default {
   methods: {
     // 退出登录
     loginout () {
-      sessionStorage.clear()
-      this.$router.push({
-        path: 'login'
-      })
+      // sessionStorage.clear()
+      // this.$router.push({
+      //   path: 'login'
+      // })
       this.$ajax(this, {
         data: {
-          op: 'p10102'
+          op: 'c30102'
         }
       })
         .then(result => {

@@ -1,118 +1,127 @@
 <template>
-  <div>
-    <Affix
-      :offset-top="clientHeight"
-      v-show="!scoreModal.show"
-    >
+  <div
+    class="_bg"
+    style="height:100%;overflow:auto;background:#FAFAFA;"
+  >
+    <div style="width:1300px;margin: 0 auto;">
       <div
-        @click="scoreModal.show = true"
-        class="dianpin_btn"
-      >点我评分
-        <Icon
-          style="font-size:30px;"
-          type="ios-arrow-forward"
-        />
-      </div>
-    </Affix>
-    <div
-      class="_bg"
-      style="height:100%;overflow:auto;background:#FAFAFA;"
-    >
-      <div style="width:1300px;margin: 0 auto;">
-        <div
-          class="_bg"
-          style="font-size:16px;padding: 40px 0;display:flex;"
-          :style="{ backgroundImage: 'url(' + preBg + ')' }"
-        >
-          <div style="width:100px;height:170px;text-align:center;margin-left:20px;"><img
-              src="../../assets/menu_logo.png"
-              style="width:auto;"
-            ></div>
-          <div style="flex:1;margin-left:20px;">
-            <div style="color:#868686;fong-size:16px;margin-top:16px;">作品编号:{{this.queryId}}</div>
-            <div style="margin-top:30px;color:#333333;
+        class="_bg"
+        style="font-size:16px;padding: 40px 0;display:flex;"
+        :style="{ backgroundImage: 'url(' + preBg + ')' }"
+      >
+        <div style="width:100px;height:170px;text-align:center;margin-left:20px;"><img
+            src="../../assets/menu_logo.png"
+            style="width:auto;height:100%;"
+          ></div>
+        <div style="flex:1;margin-left:20px;">
+          <div style="color:#868686;fong-size:16px;margin-top:16px;">作品编号:{{this.queryId}}</div>
+          <div style="margin-top:30px;color:#333333;
     font-weight: 540;
     font-style: normal;
     font-size: 36px;
     color: black;">{{namechs}}</div>
-            <div style="
+          <div style="
     font-weight: 400;
     font-style: normal;
     font-size: 20px;
     color: #FF6600;">{{nameen}}</div>
-          </div>
         </div>
-        <div style="padding: 10px 30px; 20px 0;background:white;margin-top:-20px;">
+      </div>
+      <div style="padding: 10px 30px; 20px 0;background:white;margin-top:-20px;">
+        <div
+          v-for="item in configLists"
+          :key="item.item"
+        >
+          <!-- 类型1：大标题 -->
+          <div v-if="item.style === 1">
+            <div class="main_title">
+              <span class="_title1">{{item.show}}</span>
+            </div>
+          </div>
+          <!-- 类型2：短文字 -->
           <div
-            v-for="item in configLists"
-            :key="item.item"
+            class="margin_left"
+            v-else-if="item.style === 2"
           >
-            <!-- 类型1：大标题 -->
-            <div v-if="item.style === 1">
-              <div class="main_title">
-                <span class="_title1">{{item.show}}</span>
-              </div>
-            </div>
-            <!-- 类型2：短文字 -->
             <div
-              class="margin_left"
-              v-else-if="item.style === 2"
-            >
-              <div
-                :class="item.must === 1 ? 'must_star2': ''"
-                class="title_space"
-              >{{item.show}}</div>
-              <div
-                v-if="item.value"
-                class="text_value"
-              >{{item.value}}</div>
-              <div
-                v-else
-                class="text_value"
-              >-</div>
-            </div>
-            <!-- 类型3：长文字 -->
+              :class="item.must === 1 ? 'must_star2': ''"
+              class="title_space"
+            >{{item.show}}</div>
             <div
-              class="margin_left"
-              v-else-if="item.style === 3"
-            >
-              <div
-                :class="item.must === 1 ? 'must_star2': ''"
-                class=" title_space"
-              >{{item.show}}</div>
-              <div class="text_value">{{item.value || '-'}}</div>
-            </div>
-            <!-- 类型4：数字 -->
+              v-if="item.value"
+              class="text_value"
+            >{{item.value}}</div>
             <div
-              class="margin_left"
-              v-else-if="item.style === 4"
-            >
-              <div
-                :class="item.must === 1 ? 'must_star2': ''"
-                class="title_space"
-              >{{item.show}}</div>
-              <div class="text_value">{{item.value}}</div>
-            </div>
-            <!-- 类型5：日期 -->
+              v-else
+              class="text_value"
+            >-</div>
+          </div>
+          <!-- 类型3：长文字 -->
+          <div
+            class="margin_left"
+            v-else-if="item.style === 3"
+          >
             <div
-              class="margin_left"
-              v-else-if="item.style === 5"
-            >
-              <div
-                :class="item.must === 1 ? 'must_star2': ''"
-                class="title_space"
-              >{{item.show}}</div>
-              <div class="text_value">{{item.value || '-'}}</div>
-            </div>
-            <!-- 类型6：纯图片列表 -->
+              :class="item.must === 1 ? 'must_star2': ''"
+              class=" title_space"
+            >{{item.show}}</div>
+            <div class="text_value">{{item.value || '-'}}</div>
+          </div>
+          <!-- 类型4：数字 -->
+          <div
+            class="margin_left"
+            v-else-if="item.style === 4"
+          >
             <div
-              class="margin_left"
-              v-else-if="item.style === 6"
+              :class="item.must === 1 ? 'must_star2': ''"
+              class="title_space"
+            >{{item.show}}</div>
+            <div class="text_value">{{item.value}}</div>
+          </div>
+          <!-- 类型5：日期 -->
+          <div
+            class="margin_left"
+            v-else-if="item.style === 5"
+          >
+            <div
+              :class="item.must === 1 ? 'must_star2': ''"
+              class="title_space"
+            >{{item.show}}</div>
+            <div class="text_value">{{item.value || '-'}}</div>
+          </div>
+          <!-- 类型6：纯图片列表 -->
+          <div
+            class="margin_left"
+            v-else-if="item.style === 6"
+          >
+            <div
+              :class="item.must === 1 ? 'must_star2': ''"
+              class="title_space"
+            >{{item.show}}</div>
+            <div
+              v-for="v7 in item.value.image"
+              :key="v7"
+              style="margin: 10px 10px 0 0;"
             >
-              <div
-                :class="item.must === 1 ? 'must_star2': ''"
-                class="title_space"
-              >{{item.show}}</div>
+              <img
+                :src="v7"
+                alt=""
+                style="width: 100%;"
+              >
+            </div>
+          </div>
+          <!-- 类型7：多张图片+1块文字 -->
+          <div
+            class="margin_left"
+            v-else-if="item.style === 7"
+          >
+            <div
+              :class="item.must === 1 ? 'must_star2': ''"
+              class="title_space"
+            >{{item.show}}
+            </div>
+            <div class="text_value">{{item.value.text || '-'}}</div>
+            <div style="margin-left:20px;">
               <div
                 v-for="v7 in item.value.image"
                 :key="v7"
@@ -121,68 +130,44 @@
                 <img
                   :src="v7"
                   alt=""
-                  style="width: 100%;"
+                  style="width: auto;max-width:100%;"
                 >
               </div>
             </div>
-            <!-- 类型7：多张图片+1块文字 -->
+          </div>
+          <!-- 类型8：每张图片一个名字(用于人物照片上传) -->
+          <div
+            class="margin_left"
+            v-else-if="item.style === 8"
+          >
             <div
-              class="margin_left"
-              v-else-if="item.style === 7"
+              :class="item.must === 1 ? 'must_star2': ''"
+              class="title_space"
+            >{{item.show}}
+            </div>
+            <div
+              v-if="item.value"
+              style="display:flex;margin-left:10px;"
             >
               <div
-                :class="item.must === 1 ? 'must_star2': ''"
-                class="title_space"
-              >{{item.show}}
-              </div>
-              <div class="text_value">{{item.value.text || '-'}}</div>
-              <div style="margin-left:20px;">
-                <div
-                  v-for="v7 in item.value.image"
-                  :key="v7"
-                  style="margin: 10px 10px 0 0;"
-                >
+                v-for="(v8) in item.value"
+                :key="v8.image"
+                style="margin: 10px 10px 0 0;height: 280px;"
+              >
+                <div style="height:250px;">
                   <img
-                    :src="v7"
+                    :src="v8.image"
                     alt=""
-                    style="width: auto;max-width:100%;"
+                    style="width: auto;height: 100%;"
                   >
                 </div>
-              </div>
-            </div>
-            <!-- 类型8：每张图片一个名字(用于人物照片上传) -->
-            <div
-              class="margin_left"
-              v-else-if="item.style === 8"
-            >
-              <div
-                :class="item.must === 1 ? 'must_star2': ''"
-                class="title_space"
-              >{{item.show}}
-              </div>
-              <div
-                v-if="item.value"
-                style="display:flex;margin-left:10px;"
-              >
-                <div
-                  v-for="(v8) in item.value"
-                  :key="v8.image"
-                  style="margin: 10px 10px 0 0;height: 280px;"
-                >
-                  <div style="height:250px;">
-                    <img
-                      :src="v8.image"
-                      alt=""
-                      style="width: auto;height: 100%;"
-                    >
-                  </div>
-                  <div style="width:100%;line-height:28px;text-align:center;">
-                    <span style="margin-top:2px;">{{v8.text}}</span>
-                  </div>
+                <div style="width:100%;line-height:28px;text-align:center;">
+                  <span style="margin-top:2px;">{{v8.text}}</span>
                 </div>
               </div>
-              <div v-else>-</div>
-              <!-- <div style="margin-left:10px;">
+            </div>
+            <div v-else>-</div>
+            <!-- <div style="margin-left:10px;">
             <div
               v-for="(v8) in item.value"
               :key="v8.image"
@@ -200,43 +185,43 @@
               </div>
             </div>
           </div> -->
-            </div>
-            <!-- 类型9 PDF上传 -->
+          </div>
+          <!-- 类型9 PDF上传 -->
+          <div
+            class="margin_left"
+            v-else-if="item.style === 9"
+          >
             <div
-              class="margin_left"
-              v-else-if="item.style === 9"
+              :class="item.must === 1 ? 'must_star2': ''"
+              class="title_space"
+            >{{item.show}}</div>
+            <div
+              v-if="item.value"
+              style="height: 40px;width: 100%;"
             >
-              <div
-                :class="item.must === 1 ? 'must_star2': ''"
-                class="title_space"
-              >{{item.show}}</div>
-              <div
-                v-if="item.value"
-                style="height: 40px;width: 100%;"
+              <Tooltip
+                style="float:left;"
+                content="点击浏览器打开"
               >
-                <Tooltip
-                  style="float:left;"
-                  content="点击浏览器打开"
-                >
-                  <a
-                    target="_blank"
-                    :href="item.value"
-                  ><img
-                      src="../../images/pdf.png"
-                      alt=""
-                      style="width:50px;"
-                    ></a>
-                </Tooltip>
                 <a
-                  :href="item.value"
                   target="_blank"
-                  style="float:left;margin-left:10px;margin-top:20px;"
-                >
-                  <Button type="primary">打 开</Button>
-                </a>
-              </div>
-              <div v-else>-</div>
-              <!-- <Tooltip content="浏览器打开">
+                  :href="item.value"
+                ><img
+                    src="../../images/pdf.png"
+                    alt=""
+                    style="width:50px;"
+                  ></a>
+              </Tooltip>
+              <a
+                :href="item.value"
+                target="_blank"
+                style="float:left;margin-left:10px;margin-top:20px;"
+              >
+                <Button type="primary">打 开</Button>
+              </a>
+            </div>
+            <div v-else>-</div>
+            <!-- <Tooltip content="浏览器打开">
             <a
               target="_blank"
               :href="item.value"
@@ -257,118 +242,398 @@
                 ></path>
               </svg></a>
           </Tooltip> -->
-            </div>
-            <!-- 类型10 视频上传 -->
-            <div
-              class="margin_left"
-              v-else-if="item.style === 10"
-            >
-              <div
-                :class="item.must === 1 ? 'must_star2': ''"
-                class="title_space"
-              >{{item.show}}
-              </div>
-              <div style="margin-left:20px;">
-                <video
-                  v-if="item.value"
-                  style="min-width:800px;width:40%;"
-                  controls
-                  :src="item.value"
-                ></video>
-              </div>
-            </div>
           </div>
-        </div>
-        <div style="width:100%;height:1000px;"></div>
-      </div>
-      <Modal
-        v-model="scoreModal.show"
-        draggable
-        scrollable
-        :closable="false"
-        class="score_modal"
-        :width="900"
-      >
-        <div
-          slot="header"
-          style="background:#f60;padding:4px 0;"
-        >
-          <span
-            @click="scoreModal.show = false"
-            style="cursor:pointer;"
+          <!-- 类型10 视频上传 -->
+          <div
+            class="margin_left"
+            v-else-if="item.style === 10"
           >
-            <Icon
-              style="font-size:22px;"
-              type="ios-arrow-back"
-            />
-            <span>左侧隐藏</span>
-          </span>
-          <span style="margin-left:230px;">评分控制台（可拖动）</span>
-        </div>
-        <div class="score_content">
-          <div class="header_tab">
-            <div class="score_standard score_item">评审纬度</div>
-            <div class="score_desc score_item">维度提示，但并不仅限于此</div>
-            <div class="score_range score_item">分数范围</div>
-            <div class="score_input score_item">评分</div>
-          </div>
-          <div style="display:flex;">
-            <div class="score_standard score_item">评审纬度</div>
-            <div class="score_desc score_desc_content">
-              <div>维度提示，但并不仅限于此</div>
-              <div>
-                维度提示，但并不仅限于此</div>
-              <div>
-                维度提示，但并不仅限于此</div>
-              <div>
-                维度提示，但并不仅限于此</div>
+            <div
+              :class="item.must === 1 ? 'must_star2': ''"
+              class="title_space"
+            >{{item.show}}
             </div>
-            <div class="score_range score_item">分数范围</div>
-            <div class="score_input score_item">
-              <InputNumber v-if="scoreModal.isEdit" />
-              <span v-else></span>
+            <div style="margin-left:20px;">
+              <video
+                v-if="item.value"
+                style="min-width:800px;width:40%;"
+                controls
+                :src="item.value"
+              ></video>
             </div>
           </div>
-          <div class="score_total">
-            总分： <span>88</span></div>
-          <div style="margin-top:20px;">
-            <Checkbox
-              v-model="single"
-              style="margin:10px;"
-            > &nbsp;&nbsp;评语</Checkbox>
-            <Input
-              v-model="value5"
-              type="textarea"
-              :rows="4"
-              placeholder="输入评语"
-            />
-          </div>
         </div>
-        <div
-          style="text-align:center;margin:10px 0;"
-          slot="footer"
-        >
-          <Button
-            type="primary"
-            size="large"
-            class="reard_btn_o"
-            @click="modalSubmit.show = false"
-          >确定评分</Button>
-          <Button
-            size="large"
-            style="margin-left:40px;"
-            @click="goBack"
-          >退出评分页面</Button>
-        </div>
-      </Modal>
+      </div>
     </div>
+    <!-- 评分modal -->
+    <Modal
+      v-model="scoreModal.show"
+      draggable
+      scrollable
+      :closable="false"
+      class="score_modal"
+      :width="900"
+    >
+      <div
+        slot="header"
+        style="background:#f60;padding:4px 0;"
+      >
+        <span
+          @click="scoreModal.show = false"
+          style="cursor:pointer;"
+        >
+          <Icon
+            style="font-size:22px;"
+            type="ios-arrow-back"
+          />
+          <span>左侧隐藏</span>
+        </span>
+        <span style="margin-left:230px;">评分控制台（可拖动）</span>
+      </div>
+      <div class="score_content">
+        <div class="header_tab">
+          <div class="score_standard score_item">评审纬度</div>
+          <div class="score_desc score_item">维度提示，但并不仅限于此</div>
+          <div class="score_range score_item">分数范围</div>
+          <div class="score_input score_item">评分</div>
+        </div>
+        <!-- s1 -->
+        <div
+          v-if="scroreStandard.s1"
+          style="display:flex;"
+        >
+          <div class="score_standard score_item">{{scroreStandard.s1.title}}</div>
+          <div class="score_desc score_desc_content">
+            <div
+              v-for="(v, index) in scroreStandard.s1.desc"
+              :key="index"
+            >{{v}}</div>
+          </div>
+          <div class="score_range score_item">{{scroreStandard.s1.lowerLimit}} - {{scroreStandard.s1.point}}</div>
+          <div class="score_input score_item">
+            <InputNumber
+              :min="scroreStandard.s1.lowerLimit"
+              :max="scroreStandard.s1.point"
+              v-model="scroreStandard.s1.value"
+              v-if="scoreModal.isEdit"
+            />
+            <span v-else>
+              {{scroreStandard.s1.value}}
+            </span>
+          </div>
+        </div>
+        <!-- s2 -->
+        <div
+          v-if="scroreStandard.s2"
+          style="display:flex;"
+        >
+          <div class="score_standard score_item">{{scroreStandard.s2.title}}</div>
+          <div class="score_desc score_desc_content">
+            <div
+              v-for="(v, index) in scroreStandard.s2.desc"
+              :key="index"
+            >{{v}}</div>
+          </div>
+          <div class="score_range score_item">{{scroreStandard.s2.lowerLimit}} - {{scroreStandard.s2.point}}</div>
+          <div class="score_input score_item">
+            <InputNumber
+              :min="scroreStandard.s2.lowerLimit"
+              :max="scroreStandard.s2.point"
+              v-model="scroreStandard.s2.value"
+              v-if="scoreModal.isEdit"
+            />
+            <span v-else>
+              {{scroreStandard.s2.value}}
+            </span>
+          </div>
+        </div>
+        <!-- s3 -->
+        <div
+          v-if="scroreStandard.s3"
+          style="display:flex;"
+        >
+          <div class="score_standard score_item">{{scroreStandard.s3.title}}</div>
+          <div class="score_desc score_desc_content">
+            <div
+              v-for="(v, index) in scroreStandard.s3.desc"
+              :key="index"
+            >{{v}}</div>
+          </div>
+          <div class="score_range score_item">{{scroreStandard.s3.lowerLimit}} - {{scroreStandard.s3.point}}</div>
+          <div class="score_input score_item">
+            <InputNumber
+              :min="scroreStandard.s3.lowerLimit"
+              :max="scroreStandard.s3.point"
+              v-model="scroreStandard.s3.value"
+              v-if="scoreModal.isEdit"
+            />
+            <span v-else>
+              {{scroreStandard.s3.value}}
+            </span>
+          </div>
+        </div>
+        <!-- s4 -->
+        <div
+          v-if="scroreStandard.s4"
+          style="display:flex;"
+        >
+          <div class="score_standard score_item">{{scroreStandard.s4.title}}</div>
+          <div class="score_desc score_desc_content">
+            <div
+              v-for="(v, index) in scroreStandard.s4.desc"
+              :key="index"
+            >{{v}}</div>
+          </div>
+          <div class="score_range score_item">{{scroreStandard.s4.lowerLimit}} - {{scroreStandard.s4.point}}</div>
+          <div class="score_input score_item">
+            <InputNumber
+              :min="scroreStandard.s4.lowerLimit"
+              :max="scroreStandard.s4.point"
+              v-model="scroreStandard.s4.value"
+              v-if="scoreModal.isEdit"
+            />
+            <span v-else>
+              {{scroreStandard.s4.value}}
+            </span>
+          </div>
+        </div>
+        <!-- s5 -->
+        <div
+          v-if="scroreStandard.s5"
+          style="display:flex;"
+        >
+          <div class="score_standard score_item">{{scroreStandard.s5.title}}</div>
+          <div class="score_desc score_desc_content">
+            <div
+              v-for="(v, index) in scroreStandard.s5.desc"
+              :key="index"
+            >{{v}}</div>
+          </div>
+          <div class="score_range score_item">{{scroreStandard.s5.lowerLimit}} - {{scroreStandard.s5.point}}</div>
+          <div class="score_input score_item">
+            <InputNumber
+              :min="scroreStandard.s5.lowerLimit"
+              :max="scroreStandard.s5.point"
+              v-model="scroreStandard.s5.value"
+              v-if="scoreModal.isEdit"
+            />
+            <span v-else>
+              {{scroreStandard.s5.value}}
+            </span>
+          </div>
+        </div>
+        <!-- s6 -->
+        <div
+          v-if="scroreStandard.s6"
+          style="display:flex;"
+        >
+          <div class="score_standard score_item">{{scroreStandard.s6.title}}</div>
+          <div class="score_desc score_desc_content">
+            <div
+              v-for="(v, index) in scroreStandard.s6.desc"
+              :key="index"
+            >{{v}}</div>
+          </div>
+          <div class="score_range score_item">{{scroreStandard.s6.lowerLimit}} - {{scroreStandard.s6.point}}</div>
+          <div class="score_input score_item">
+            <InputNumber
+              :min="scroreStandard.s6.lowerLimit"
+              :max="scroreStandard.s6.point"
+              v-model="scroreStandard.s6.value"
+              v-if="scoreModal.isEdit"
+            />
+            <span v-else>
+              {{scroreStandard.s6.value}}
+            </span>
+          </div>
+        </div>
+        <!-- s7 -->
+        <div
+          v-if="scroreStandard.s7"
+          style="display:flex;"
+        >
+          <div class="score_standard score_item">{{scroreStandard.s7.title}}</div>
+          <div class="score_desc score_desc_content">
+            <div
+              v-for="(v, index) in scroreStandard.s7.desc"
+              :key="index"
+            >{{v}}</div>
+          </div>
+          <div class="score_range score_item">{{scroreStandard.s7.lowerLimit}} - {{scroreStandard.s7.point}}</div>
+          <div class="score_input score_item">
+            <InputNumber
+              :min="scroreStandard.s7.lowerLimit"
+              :max="scroreStandard.s7.point"
+              v-model="scroreStandard.s7.value"
+              v-if="scoreModal.isEdit"
+            />
+            <span v-else>
+              {{scroreStandard.s7.value}}
+            </span>
+          </div>
+        </div>
+        <!-- s8 -->
+        <div
+          v-if="scroreStandard.s8"
+          style="display:flex;"
+        >
+          <div class="score_standard score_item">{{scroreStandard.s8.title}}</div>
+          <div class="score_desc score_desc_content">
+            <div
+              v-for="(v, index) in scroreStandard.s8.desc"
+              :key="index"
+            >{{v}}</div>
+          </div>
+          <div class="score_range score_item">{{scroreStandard.s8.lowerLimit}} - {{scroreStandard.s8.point}}</div>
+          <div class="score_input score_item">
+            <InputNumber
+              :min="scroreStandard.s8.lowerLimit"
+              :max="scroreStandard.s8.point"
+              v-model="scroreStandard.s8.value"
+              v-if="scoreModal.isEdit"
+            />
+            <span v-else>
+              {{scroreStandard.s8.value}}
+            </span>
+          </div>
+        </div>
+        <!-- s9 -->
+        <div
+          v-if="scroreStandard.s9"
+          style="display:flex;"
+        >
+          <div class="score_standard score_item">{{scroreStandard.s9.title}}</div>
+          <div class="score_desc score_desc_content">
+            <div
+              v-for="(v, index) in scroreStandard.s9.desc"
+              :key="index"
+            >{{v}}</div>
+          </div>
+          <div class="score_range score_item">{{scroreStandard.s9.lowerLimit}} - {{scroreStandard.s9.point}}</div>
+          <div class="score_input score_item">
+            <InputNumber
+              :min="scroreStandard.s9.lowerLimit"
+              :max="scroreStandard.s9.point"
+              v-model="scroreStandard.s9.value"
+              v-if="scoreModal.isEdit"
+            />
+            <span v-else>
+              {{scroreStandard.s9.value}}
+            </span>
+          </div>
+        </div>
+        <!-- s10 -->
+        <div
+          v-if="scroreStandard.s10"
+          style="display:flex;"
+        >
+          <div class="score_standard score_item">{{scroreStandard.s10.title}}</div>
+          <div class="score_desc score_desc_content">
+            <div
+              v-for="(v, index) in scroreStandard.s10.desc"
+              :key="index"
+            >{{v}}</div>
+          </div>
+          <div class="score_range score_item">{{scroreStandard.s10.lowerLimit}} - {{scroreStandard.s10.point}}</div>
+          <div class="score_input score_item">
+            <InputNumber
+              :min="scroreStandard.s10.lowerLimit"
+              :max="scroreStandard.s10.point"
+              v-model="scroreStandard.s10.value"
+              v-if="scoreModal.isEdit"
+            />
+            <span v-else>
+              {{scroreStandard.s10.value}}
+            </span>
+          </div>
+        </div>
+        <div class="score_total">
+          总分： <span>{{getScoreTotal}}</span></div>
+        <div style="margin-top:20px;">
+          <Input
+            v-model="scoreModal.comment"
+            type="textarea"
+            :rows="4"
+            :disabled="!scoreModal.isEdit"
+            placeholder="输入评语"
+          />
+        </div>
+      </div>
+      <div
+        style="text-align:center;margin:10px 0;"
+        slot="footer"
+      >
+        <Button
+          type="primary"
+          size="large"
+          class="reard_btn_o"
+          @click="saveProcess"
+        >{{scoreModal.isEdit?'确定评分':'修改评分'}}</Button>
+        <Button
+          size="large"
+          style="margin-left:40px;"
+          @click="goBack"
+        >退出评分页面</Button>
+      </div>
+    </Modal>
+    <Affix
+      :offset-top="clientHeight"
+      v-show="!scoreModal.show"
+    >
+      <div
+        @click="scoreModal.show = true"
+        class="dianpin_btn"
+      >点我评分
+        <Icon
+          style="font-size:30px;"
+          type="ios-arrow-forward"
+        />
+      </div>
+    </Affix>
   </div>
-
 </template>
 
 <script>
 export default {
   name: "preview",
+  computed: {
+    getScoreTotal () {
+      let total = 0
+      let info = this.scroreStandard
+      if (info.s1) {
+        total = total + info.s1.value
+      }
+      if (info.s2) {
+        total = total + info.s2.value
+      }
+      if (info.s3) {
+        total = total + info.s3.value
+      }
+      if (info.s4) {
+        total = total + info.s4.value
+      }
+      if (info.s5) {
+        total = total + info.s5.value
+      }
+      if (info.s6) {
+        total = total + info.s6.value
+      }
+      if (info.s7) {
+        total = total + info.s7.value
+      }
+      if (info.s8) {
+        total = total + info.s8.value
+      }
+      if (info.s9) {
+        total = total + info.s9.value
+      }
+      if (info.s10) {
+        total = total + info.s10.value
+      }
+
+      return total
+    },
+  },
   data () {
     return {
       clientHeight: document.documentElement.clientHeight / 2,
@@ -379,22 +644,94 @@ export default {
       preBg: require('../../assets/pre_bg.jpg'),
       nameen: '',
       scoreModal: {
-        show: true,
-        isEdit: true
-      }
+        show: false,
+        isEdit: false,
+        comment: '',
+        isComment: true
+      },
+      scroreStandard: {},
+      workScore: {},
     }
   },
   created () {
     if (this.queryId) {
       this.getInfo()
+      this.getScore()
     }
   },
   methods: {
+    // 评委提交作品的打分(c30206)
+    saveProcess () {
+      if (!this.scoreModal.isEdit) {
+        return this.scoreModal.isEdit = true
+      }
+      let info = this.scroreStandard
+      let that = this
+      let data = {
+        op: 'c30206',
+        id: this.queryId * 1,
+        comment: this.scoreModal.comment
+      }
+      // 判断值
+      let isTrue = true
+      Object.keys(info).map(function (key, index) {
+        if (info[key].value > info[key].point || info[key].value < info[key].lowerLimit) {
+          that.$Message.warning(`【${info[key].title}】 超出分数范围，请修改！`)
+          isTrue = false
+        }
+      });
+      if (!isTrue) {
+        return false
+      }
+      if (info.s1) {
+        data.s1 = info.s1.value
+      }
+      if (info.s1) {
+        data.s1 = info.s1.value
+      }
+      if (info.s2) {
+        data.s2 = info.s2.value
+      }
+      if (info.s3) {
+        data.s3 = info.s3.value
+      }
+      if (info.s4) {
+        data.s4 = info.s4.value
+      }
+      if (info.s5) {
+        data.s5 = info.s5.value
+      }
+      if (info.s6) {
+        data.s6 = info.s6.value
+      }
+      if (info.s7) {
+        data.s7 = info.s7.value
+      }
+      if (info.s8) {
+        data.s8 = info.s8.value
+      }
+      if (info.s9) {
+        data.s9 = info.s9.value
+      }
+      if (info.s10) {
+        data.s10 = info.s10.value
+      }
+      this.$ajax(this, {
+        data
+      })
+        .then(res => {
+          this.$Message.success('修改成功！')
+          // this.scoreModal.show = false
+        })
+        .catch(err => {
+          this.$Message.error(err.message)
+        })
+    },
     // 单个作品
     getInfo () {
       this.$ajax(this, {
         data: {
-          op: 'p10406',
+          op: 'c30203',
           id: this.queryId * 1
         }
       })
@@ -402,8 +739,10 @@ export default {
           this.namechs = res.data.namechs
           this.nameen = res.data.nameen
           this.configLists = res.data.items
-          console.log(this.configLists)
+          console.log('作品信息', res.data)
           document.title = res.data.namechs
+          let info = res.data
+          this.getStandard(info.c1, info.c2, info.c3, info.c4)
           // 时间转化
           this.configLists.map(item => {
             if (item.value === 'null' || item.value === null) {
@@ -425,7 +764,55 @@ export default {
           this.$Message.error(err.message)
         })
     },
-  },
+    // 获取评委对单个作品的评分(c30204)
+    getScore () {
+      this.$ajax(this, {
+        data: {
+          op: 'c30204',
+          id: this.queryId * 1
+        }
+      })
+        .then(res => {
+          console.log('单个作品的评分', res)
+          this.workScore = res.data
+          this.scoreModal.comment = res.data.comment
+          this.scoreModal.isEdit = false
+        })
+        .catch(err => {
+          this.$Message.error(err.message)
+        })
+    },
+    // 获取当前类型的评审标准(c30205)
+    getStandard (c1, c2, c3, c4) {
+      let that = this
+      this.$ajax(this, {
+        data: {
+          op: 'c30205',
+          c1,
+          c2,
+          c3,
+          c4,
+        }
+      })
+        .then(res => {
+          console.log('类型的评审标准', res)
+          let info = res.data
+          // 计算分数范围
+          Object.keys(info).map(function (key, index) {
+            info[key]['lowerLimit'] = (info[key].point * 0.2).toFixed(0) * 1
+            info[key]['value'] = that.workScore[key]
+          });
+          this.scroreStandard = res.data
+          console.log(this.scroreStandard)
+        })
+        .catch(err => {
+          this.$Message.error(err.message)
+        })
+    },
+    goBack () {
+      window.close()
+    }
+  }
 }
 </script>
 
@@ -498,6 +885,9 @@ export default {
   padding: 10px 10px;
   border-right: 1px solid #e8eaec;
   border-bottom: 1px solid #e8eaec;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .score_input {
   width: 130px;

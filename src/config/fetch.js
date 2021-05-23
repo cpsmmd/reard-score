@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import axios from 'axios'
-axios.defaults.withCredentials = true
+// axios.defaults.withCredentials = true
 let $axios = axios.create({
   baseURL: process.env.BASE_API,
-  withCredentials: true,
+  // withCredentials: true,
   timeout: 30000000
 })
 // 设置instance默认

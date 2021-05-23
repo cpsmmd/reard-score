@@ -51,7 +51,6 @@ export default {
       }
     },
     editOk () {
-      console.log(this.confirmPassword)
       if (this.confirmPassword.trim().length === 0) {
         return this.$Message.error('请确认新密码')
       }
@@ -60,8 +59,8 @@ export default {
       }
       this.$ajax(this, {
         data: {
-          op: 'p10303',
-          matchid: getMatchid(),
+          op: 'c30103',
+          // matchid: getMatchid(),
           oldpasswd: hex_md5(this.oldPassword),
           newpasswd: hex_md5(this.confirmPassword)
         }

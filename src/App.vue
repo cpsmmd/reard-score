@@ -64,4 +64,11 @@ export default {
 .ivu-page-item-active:hover a {
   color: #323232;
 }
+.ivu-table-sort i {
+  font-size: 20px;
+}
+.ivu-table-sort {
+  width: 20px;
+  height: 16px;
+}
 </style>
