@@ -23,6 +23,7 @@
         border
         :columns="columns"
         :data="workShowList"
+        @on-sort-change="handleSortChange"
       ></Table>
       <Page
         style="float:right;margin-tight:30px;margin-top:20px;"
@@ -43,6 +44,7 @@ export default {
   data () {
     return {
       workList: [],
+      workListOrigin: [],
       workShowList: [],
       pageNum: 1,
       pageSize: 10,
@@ -66,7 +68,7 @@ export default {
           title: '评分',
           align: 'center',
           key: 'sort',
-          "sortable": true,
+          "sortable": 'custom',
           render: (h, params) => {
             return h('span', {}, params.row.sort)
           }
@@ -91,11 +93,19 @@ export default {
           }
         }
       ],
-      spinShow: true
+      spinShow: true,
+      scorebegin: '',
+      editScorebeginTime: '',
+      scorebeginPicker: '',
+      scoreend: '',
+      editScoreendTime: '',
+      scoreendPicker: '',
+      isEditJudge: false,
     }
   },
   async created () {
     this.getWorkLists()
+    this.getMatchTime()
   },
   methods: {
     // 获取某个分类评委负责的作品列表(c30202)
@@ -111,7 +121,6 @@ export default {
         }
       })
         .then(res => {
-          console.log(res)
           this.workList = res.data
           this.workList.map(item => {
             item.s1 = item.s1 || 0
@@ -126,6 +135,7 @@ export default {
             item.s10 = item.s10 || 0
             item.sort = item.s1 + item.s2 + item.s3 + item.s4 + item.s5 + item.s6 + item.s7 + item.s8 + item.s8 + item.s9 + item.s10
           })
+          this.workListOrigin = [...this.workList]
           this.changePage(1)
           this.spinShow = false
         })
@@ -138,16 +148,62 @@ export default {
       this.pageNum = val
       this.workShowList = this.workList.slice((this.pageNum - 1) * this.pageSize, this.pageNum * this.pageSize)
     },
+    handleSortChange ({ key, order }) {
+      // 降序
+      let newList = JSON.parse(JSON.stringify(this.workList))
+      if (order === 'desc') {
+        newList.sort((v1, v2) => {
+          return v2[key] - v1[key]
+        })
+        this.workList = [...newList]
+      } else if (order === 'asc') {
+        // 升序
+        newList.sort((v1, v2) => {
+          return v1[key] - v2[key]
+        })
+        this.workList = [...newList]
+      } else {
+        this.workList = [...this.workListOrigin]
+      }
+      this.changePage(1)
+    },
     preview (info) {
       let url = this.$router.resolve({
         path: '/pre',
         query: { id: info.id }
       })
       window.open(url.href, '_blank');
-    }
+    },
+    // 获取评分开始结束时间
+    getMatchTime () {
+      this.$ajax(this, {
+        data: {
+          op: 'y20205',
+          matchid: getMatchid()
+        }
+      })
+        .then(res => {
+          if (res.data) {
+            let now = new Date().getTime()
+            if (res.data.scoreend * 1000 > now && now > res.data.scorebegin * 1000) {
+              this.isEditJudge = true
+            } else {
+              this.isEditJudge = false
+            }
+          }
+        })
+        .catch(err => {
+          this.$Message.error(err.message)
+        })
+    },
   },
 }
 </script>
 
-<style  scoped>
+<style>
+.disableds {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.4;
+}
 </style>

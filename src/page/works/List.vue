@@ -3,21 +3,21 @@
     <div style="display:flex;">
       <div class="head_flex">
         <div class="_content">
-          <div class="_title">{{this.matchInfo.postendtime?getLocalTime(this.matchInfo.postendtime):''}}</div>
+          <div class="_title">{{this.scorebegin}} ~ {{this.scoreend}}</div>
           <div class="_text">评分起始时间</div>
         </div>
         <div class="_img"><img src="../../assets/time.png"></div>
       </div>
       <div class="head_flex">
         <div class="_content">
-          <div class="_title">{{this.list.length}}</div>
+          <div class="_title">{{this.worksTotal}}</div>
           <div class="_text">负责评分作品总数</div>
         </div>
         <div class="_img"><img src="../../assets/over.png"></div>
       </div>
       <div class="head_flex">
         <div class="_content">
-          <div class="_title">{{this.list.length - this.completeNum}}</div>
+          <div class="_title">{{this.hasScoreTotal}}</div>
           <div class="_text">已评分作品数量</div>
         </div>
         <div class="_img"><img src="../../assets/edit.png"></div>
@@ -35,7 +35,7 @@
         v-if="spinShow"
       ></Spin>
       <div
-        v-if="list.length > 0"
+        v-if="showLists.length > 0"
         style="margin-top:30px;"
       >
         <Card
@@ -129,6 +129,16 @@ export default {
         show: false,
         value: 0,
       },
+      // 评分起始
+      isScoreEdit: false,
+      scorebegin: '',
+      editScorebeginTime: '',
+      scorebeginPicker: '',
+      scoreend: '',
+      editScoreendTime: '',
+      scoreendPicker: '',
+      worksTotal: 0,
+      hasScoreTotal: 0,
     }
   },
   async created () {
@@ -137,10 +147,35 @@ export default {
     await this.getlevelC2()
     await this.getlevelC1()
     this.getWorkList()
+    this.getMatchTime()
     // this.getProcessInfo()
     // this.getAccount()
   },
   methods: {
+    // 获取评分开始结束时间
+    getMatchTime () {
+      this.$ajax(this, {
+        data: {
+          op: 'y20205',
+          matchid: getMatchid()
+        }
+      })
+        .then(res => {
+          if (res.data) {
+            this.editScorebeginTime = res.data.scorebegin
+            this.editScoreendTime = res.data.scoreend
+            let date1 = new Date(parseInt(res.data.scorebegin * 1000)) // 时间戳为10位(到秒)需*1000，时间戳为13位（到毫秒）的话不需乘1000
+            this.scorebeginPicker = date1
+            this.scorebegin = `${date1.getFullYear()}-${(date1.getMonth() + 1).toString().padStart(2, '0')}-${date1.getDate().toString().padStart(2, '0')}`
+            let date2 = new Date(parseInt(res.data.scoreend * 1000)) // 时间戳为10位(到秒)需*1000，时间戳为13位（到毫秒）的话不需乘1000
+            this.scoreendPicker = date2
+            this.scoreend = `${date2.getFullYear()}-${(date2.getMonth() + 1).toString().padStart(2, '0')}-${date2.getDate().toString().padStart(2, '0')}`
+          }
+        })
+        .catch(err => {
+          this.$Message.error(err.message)
+        })
+    },
     // 获取评分的工作进度
     getProcessInfo () {
       this.$ajax(this, {
@@ -200,11 +235,13 @@ export default {
           newList.map(item => {
             let info = processList.find(v => v.c1 === item.c1 && v.c2 === item.c2 && v.c3 === item.c3 && v.c4 === item.c4)
             item.taskall = info.taskall
+            this.worksTotal = this.worksTotal + info.taskall
+            this.hasScoreTotal = this.hasScoreTotal + info.taskfinish
             item.taskfinish = info.taskfinish
           })
           this.list = [...newList]
           this.spinShow = false
-          // this.changePage(1)
+          this.changePage(1)
           // this.completeNum = this.list.filter(v => v.completion === 1).length
         })
         .catch(err => {
@@ -426,7 +463,7 @@ export default {
   margin-left: auto;
 }
 .head_flex ._content {
-  width: 200px;
+  width: 500px;
   font-size: 18px;
 }
 .head_flex ._content ._title {
@@ -438,7 +475,7 @@ export default {
   margin-top: 20px;
 }
 .head_flex ._img img {
-  width: 100%;
+  width: 46px;
   display: inline-block;
   margin-top: 30px;
 }

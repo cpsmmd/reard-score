@@ -567,6 +567,7 @@
           type="primary"
           size="large"
           class="reard_btn_o"
+          :disabled="isEditJudge"
           @click="saveProcess"
         >{{scoreModal.isEdit?'确定评分':'修改评分'}}</Button>
         <Button
@@ -594,6 +595,7 @@
 </template>
 
 <script>
+import { getMatchid } from '../../config/common'
 export default {
   name: "preview",
   computed: {
@@ -651,10 +653,14 @@ export default {
       },
       scroreStandard: {},
       workScore: {},
+      phptTime: 0,
+      isEditJudge: false,
     }
   },
-  created () {
+  async created () {
     if (this.queryId) {
+      await this.getPhpTime()
+      this.getMatchTime()
       this.getInfo()
       this.getScore()
     }
@@ -720,7 +726,12 @@ export default {
         data
       })
         .then(res => {
-          this.$Message.success('修改成功！')
+          if (res.result === 0) {
+            this.$Message.success('修改成功！')
+            this.scoreModal.isEdit = false
+          } else {
+            this.$Message.error(res.result)
+          }
           // this.scoreModal.show = false
         })
         .catch(err => {
@@ -811,7 +822,41 @@ export default {
     },
     goBack () {
       window.close()
-    }
+    },
+    getPhpTime () {
+      return new Promise(resolve => {
+        this.$ajax(this, {
+          data: {
+            op: 'a10101'
+          }
+        })
+          .then(res => {
+            this.phptTime = res.t
+            resolve('ok')
+          })
+      })
+    },
+    // 获取评分开始结束时间
+    getMatchTime () {
+      this.$ajax(this, {
+        data: {
+          op: 'y20205',
+          matchid: getMatchid()
+        }
+      })
+        .then(res => {
+          if (res.data) {
+            if (res.data.scoreend > this.phptTime && this.phptTime > res.data.scorebegin) {
+              this.isEditJudge = true
+            } else {
+              this.isEditJudge = false
+            }
+          }
+        })
+        .catch(err => {
+          this.$Message.error(err.message)
+        })
+    },
   }
 }
 </script>

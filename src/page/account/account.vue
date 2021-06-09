@@ -66,7 +66,11 @@ export default {
         }
       })
         .then(result => {
-          this.$Message.success('修改密码成功')
+          if (result.result === 0) {
+            this.$Message.success('修改密码成功')
+          } else if (result.result === 101) {
+            this.$Message.error('旧密码不正确！')
+          }
         })
         .catch(err => {
           this.$Message.error(err.message)
