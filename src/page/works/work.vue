@@ -11,7 +11,7 @@
           font-weight: 700;
           font-style: normal;
           color: #FF9900;"><span v-if="curTypeInfo.c1name">{{curTypeInfo.c1name}}</span><span v-if="curTypeInfo.c2name">&nbsp;- {{curTypeInfo.c2name}}</span><span v-if="curTypeInfo.c3name">&nbsp;- {{curTypeInfo.c3name}}</span><span v-if="curTypeInfo.c4name">&nbsp;- {{curTypeInfo.c4name}}</span></div>
-      <div style="margin-top:20px;color:white;">已评分/任务数量 ：<span style="color:#FFFF00;">{{curTypeInfo.taskall}} / {{curTypeInfo.taskfinish}}</span> </div>
+      <div style="margin-top:20px;color:white;">已评分/任务数量 ：<span style="color:#FFFF00;">{{curTypeInfo.taskfinish}} / {{curTypeInfo.taskall}}</span> </div>
     </div>
     <div style="margin-top:20px;position:relative;">
       <Spin
@@ -68,7 +68,7 @@ export default {
           title: '评分',
           align: 'center',
           key: 'sort',
-          "sortable": 'custom',
+          'sortable': 'custom',
           render: (h, params) => {
             return h('span', {}, params.row.sort)
           }
@@ -88,7 +88,7 @@ export default {
                     this.preview(params.row)
                   }
                 }
-              }, '开始评分')
+              }, '评分')
             ])
           }
         }
@@ -100,7 +100,7 @@ export default {
       scoreend: '',
       editScoreendTime: '',
       scoreendPicker: '',
-      isEditJudge: false,
+      isEditJudge: false
     }
   },
   async created () {
@@ -117,7 +117,7 @@ export default {
           c1: this.curTypeInfo.c1,
           c2: this.curTypeInfo.c2,
           c3: this.curTypeInfo.c3,
-          c4: this.curTypeInfo.c4,
+          c4: this.curTypeInfo.c4
         }
       })
         .then(res => {
@@ -172,7 +172,7 @@ export default {
         path: '/pre',
         query: { id: info.id }
       })
-      window.open(url.href, '_blank');
+      window.open(url.href, '_blank')
     },
     // 获取评分开始结束时间
     getMatchTime () {
@@ -195,8 +195,8 @@ export default {
         .catch(err => {
           this.$Message.error(err.message)
         })
-    },
-  },
+    }
+  }
 }
 </script>
 

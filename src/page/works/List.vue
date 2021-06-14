@@ -49,7 +49,7 @@
           >
             <div class="content_left">
               <div style="color:black;font-size:18px;"><span v-if="item.c1name">{{item.c1name}}</span><span v-if="item.c2name">&nbsp;- {{item.c2name}}</span><span v-if="item.c3name">&nbsp;- {{item.c3name}}</span><span v-if="item.c4name">&nbsp;- {{item.c4name}}</span></div>
-              <div style="margin-top:20px;">已评分/任务数量 ：{{item.taskall}} / {{item.taskfinish}}</div>
+              <div style="margin-top:20px;">已评分/任务数量 ：{{item.taskfinish}} / {{item.taskall}}</div>
             </div>
             <div class="content_right">
               <div>

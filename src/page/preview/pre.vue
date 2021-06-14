@@ -567,7 +567,7 @@
           type="primary"
           size="large"
           class="reard_btn_o"
-          :disabled="isEditJudge"
+          :disabled="!isEditJudge"
           @click="saveProcess"
         >{{scoreModal.isEdit?'确定评分':'修改评分'}}</Button>
         <Button
@@ -845,12 +845,15 @@ export default {
         }
       })
         .then(res => {
+          console.log(res.data)
+          console.log(this.phptTime)
           if (res.data) {
             if (res.data.scoreend > this.phptTime && this.phptTime > res.data.scorebegin) {
               this.isEditJudge = true
             } else {
               this.isEditJudge = false
             }
+            console.log('this.isEditJudge', this.isEditJudge)
           }
         })
         .catch(err => {
