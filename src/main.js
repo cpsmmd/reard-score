@@ -9,11 +9,16 @@ import { store } from './store/store.js'
 import 'iview/dist/styles/iview.css'
 import './config/rem'
 import '@/config/fetch'
+import hevueImgPreview from 'hevue-img-preview'
+import 'hevue-img-preview/css/theme-dark.css'
 
 Vue.config.productionTip = false
 Vue.use(router)
 Vue.use(iView)
-
+Vue.use(hevueImgPreview, {
+  keyboard: true,
+  clickMaskCLose: true
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

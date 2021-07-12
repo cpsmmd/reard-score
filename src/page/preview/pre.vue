@@ -99,13 +99,15 @@
               class="title_space"
             >{{item.show}}</div>
             <div
-              v-for="v7 in item.value.image"
+              v-for="(v7, index6) in item.value.image"
               :key="v7"
               style="margin: 10px 10px 0 0;"
             >
               <img
                 :src="v7"
+                :key="index6"
                 alt=""
+                @click="showImg6(index6, item.value.image)"
                 style="width: 100%;"
               >
             </div>
@@ -123,12 +125,14 @@
             <div class="text_value">{{item.value.text || '-'}}</div>
             <div style="margin-left:20px;">
               <div
-                v-for="v7 in item.value.image"
+                v-for="(v7, index7) in item.value.image"
                 :key="v7"
                 style="margin: 10px 10px 0 0;"
               >
                 <img
                   :src="v7"
+                  :key="index7"
+                  @click="showImg6(index7, item.value.image)"
                   alt=""
                   style="width: auto;max-width:100%;"
                 >
@@ -262,6 +266,12 @@
               ></video>
             </div>
           </div>
+          <!-- 类型11 显示提示文字 -->
+          <div v-else-if="item.style === 11">
+            <div class="main_title11">
+              <span :style="{color: '#'+item.color, fontSize: item.size + 'px'}">{{item.show}}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -292,10 +302,10 @@
       </div>
       <div class="score_content">
         <div class="header_tab">
-          <div class="score_standard score_item">评审纬度</div>
-          <div class="score_desc score_item">维度提示，但并不仅限于此</div>
-          <div class="score_range score_item">分数范围</div>
-          <div class="score_input score_item">评分</div>
+          <div class="score_standard score_item top_h">评审纬度</div>
+          <div class="score_desc score_item top_h">维度提示，但并不仅限于此</div>
+          <div class="score_range score_item top_h">分数上限</div>
+          <div class="score_input score_item top_h">评分</div>
         </div>
         <!-- s1 -->
         <div
@@ -305,21 +315,34 @@
           <div class="score_standard score_item">{{scroreStandard.s1.title}}</div>
           <div class="score_desc score_desc_content">
             <div
-              v-for="(v, index) in scroreStandard.s1.desc"
+              class="child_desc"
+              v-for="(v, index) in scroreStandard.s1.child"
               :key="index"
-            >{{v}}</div>
+            >{{v.desc}}</div>
           </div>
-          <div class="score_range score_item">{{scroreStandard.s1.lowerLimit}} - {{scroreStandard.s1.point}}</div>
+          <div class="score_range score_item">
+            <div
+              class="child_desc2"
+              v-for="(v, index) in scroreStandard.s1.child"
+              :key="index"
+            >{{v.point}}</div>
+          </div>
           <div class="score_input score_item">
-            <InputNumber
-              :min="scroreStandard.s1.lowerLimit"
-              :max="scroreStandard.s1.point"
-              v-model="scroreStandard.s1.value"
-              v-if="scoreModal.isEdit"
-            />
-            <span v-else>
-              {{scroreStandard.s1.value}}
-            </span>
+            <div
+              class="child_desc2"
+              :key="index1"
+              v-for="(itemv, index1) in scroreStandard.s1.value"
+            >
+              <InputNumber
+                :min="0"
+                :max="scroreStandard.s1.child[index1].point"
+                v-model="scroreStandard.s1.value[index1]"
+                v-if="scoreModal.isEdit"
+              />
+              <span v-else>
+                {{itemv}}
+              </span>
+            </div>
           </div>
         </div>
         <!-- s2 -->
@@ -330,21 +353,34 @@
           <div class="score_standard score_item">{{scroreStandard.s2.title}}</div>
           <div class="score_desc score_desc_content">
             <div
-              v-for="(v, index) in scroreStandard.s2.desc"
+              class="child_desc"
+              v-for="(v, index) in scroreStandard.s2.child"
               :key="index"
-            >{{v}}</div>
+            >{{v.desc}}</div>
           </div>
-          <div class="score_range score_item">{{scroreStandard.s2.lowerLimit}} - {{scroreStandard.s2.point}}</div>
+          <div class="score_range score_item">
+            <div
+              class="child_desc2"
+              v-for="(v, index) in scroreStandard.s2.child"
+              :key="index"
+            >{{v.point}}</div>
+          </div>
           <div class="score_input score_item">
-            <InputNumber
-              :min="scroreStandard.s2.lowerLimit"
-              :max="scroreStandard.s2.point"
-              v-model="scroreStandard.s2.value"
-              v-if="scoreModal.isEdit"
-            />
-            <span v-else>
-              {{scroreStandard.s2.value}}
-            </span>
+            <div
+              class="child_desc2"
+              :key="index1"
+              v-for="(itemv, index1) in scroreStandard.s2.value"
+            >
+              <InputNumber
+                :min="0"
+                :max="scroreStandard.s2.child[index1].point"
+                v-model="scroreStandard.s2.value[index1]"
+                v-if="scoreModal.isEdit"
+              />
+              <span v-else>
+                {{itemv}}
+              </span>
+            </div>
           </div>
         </div>
         <!-- s3 -->
@@ -355,21 +391,34 @@
           <div class="score_standard score_item">{{scroreStandard.s3.title}}</div>
           <div class="score_desc score_desc_content">
             <div
-              v-for="(v, index) in scroreStandard.s3.desc"
+              class="child_desc"
+              v-for="(v, index) in scroreStandard.s3.child"
               :key="index"
-            >{{v}}</div>
+            >{{v.desc}}</div>
           </div>
-          <div class="score_range score_item">{{scroreStandard.s3.lowerLimit}} - {{scroreStandard.s3.point}}</div>
+          <div class="score_range score_item">
+            <div
+              class="child_desc2"
+              v-for="(v, index) in scroreStandard.s3.child"
+              :key="index"
+            >{{v.point}}</div>
+          </div>
           <div class="score_input score_item">
-            <InputNumber
-              :min="scroreStandard.s3.lowerLimit"
-              :max="scroreStandard.s3.point"
-              v-model="scroreStandard.s3.value"
-              v-if="scoreModal.isEdit"
-            />
-            <span v-else>
-              {{scroreStandard.s3.value}}
-            </span>
+            <div
+              class="child_desc2"
+              :key="index1"
+              v-for="(itemv, index1) in scroreStandard.s3.value"
+            >
+              <InputNumber
+                :min="0"
+                :max="scroreStandard.s3.child[index1].point"
+                v-model="scroreStandard.s3.value[index1]"
+                v-if="scoreModal.isEdit"
+              />
+              <span v-else>
+                {{itemv}}
+              </span>
+            </div>
           </div>
         </div>
         <!-- s4 -->
@@ -380,21 +429,34 @@
           <div class="score_standard score_item">{{scroreStandard.s4.title}}</div>
           <div class="score_desc score_desc_content">
             <div
-              v-for="(v, index) in scroreStandard.s4.desc"
+              class="child_desc"
+              v-for="(v, index) in scroreStandard.s4.child"
               :key="index"
-            >{{v}}</div>
+            >{{v.desc}}</div>
           </div>
-          <div class="score_range score_item">{{scroreStandard.s4.lowerLimit}} - {{scroreStandard.s4.point}}</div>
+          <div class="score_range score_item">
+            <div
+              class="child_desc2"
+              v-for="(v, index) in scroreStandard.s4.child"
+              :key="index"
+            >{{v.point}}</div>
+          </div>
           <div class="score_input score_item">
-            <InputNumber
-              :min="scroreStandard.s4.lowerLimit"
-              :max="scroreStandard.s4.point"
-              v-model="scroreStandard.s4.value"
-              v-if="scoreModal.isEdit"
-            />
-            <span v-else>
-              {{scroreStandard.s4.value}}
-            </span>
+            <div
+              class="child_desc2"
+              :key="index1"
+              v-for="(itemv, index1) in scroreStandard.s4.value"
+            >
+              <InputNumber
+                :min="0"
+                :max="scroreStandard.s4.child[index1].point"
+                v-model="scroreStandard.s4.value[index1]"
+                v-if="scoreModal.isEdit"
+              />
+              <span v-else>
+                {{itemv}}
+              </span>
+            </div>
           </div>
         </div>
         <!-- s5 -->
@@ -405,21 +467,34 @@
           <div class="score_standard score_item">{{scroreStandard.s5.title}}</div>
           <div class="score_desc score_desc_content">
             <div
-              v-for="(v, index) in scroreStandard.s5.desc"
+              class="child_desc"
+              v-for="(v, index) in scroreStandard.s5.child"
               :key="index"
-            >{{v}}</div>
+            >{{v.desc}}</div>
           </div>
-          <div class="score_range score_item">{{scroreStandard.s5.lowerLimit}} - {{scroreStandard.s5.point}}</div>
+          <div class="score_range score_item">
+            <div
+              class="child_desc2"
+              v-for="(v, index) in scroreStandard.s5.child"
+              :key="index"
+            >{{v.point}}</div>
+          </div>
           <div class="score_input score_item">
-            <InputNumber
-              :min="scroreStandard.s5.lowerLimit"
-              :max="scroreStandard.s5.point"
-              v-model="scroreStandard.s5.value"
-              v-if="scoreModal.isEdit"
-            />
-            <span v-else>
-              {{scroreStandard.s5.value}}
-            </span>
+            <div
+              class="child_desc2"
+              :key="index1"
+              v-for="(itemv, index1) in scroreStandard.s5.value"
+            >
+              <InputNumber
+                :min="0"
+                :max="scroreStandard.s5.child[index1].point"
+                v-model="scroreStandard.s5.value[index1]"
+                v-if="scoreModal.isEdit"
+              />
+              <span v-else>
+                {{itemv}}
+              </span>
+            </div>
           </div>
         </div>
         <!-- s6 -->
@@ -430,21 +505,34 @@
           <div class="score_standard score_item">{{scroreStandard.s6.title}}</div>
           <div class="score_desc score_desc_content">
             <div
-              v-for="(v, index) in scroreStandard.s6.desc"
+              class="child_desc"
+              v-for="(v, index) in scroreStandard.s6.child"
               :key="index"
-            >{{v}}</div>
+            >{{v.desc}}</div>
           </div>
-          <div class="score_range score_item">{{scroreStandard.s6.lowerLimit}} - {{scroreStandard.s6.point}}</div>
+          <div class="score_range score_item">
+            <div
+              class="child_desc2"
+              v-for="(v, index) in scroreStandard.s6.child"
+              :key="index"
+            >{{v.point}}</div>
+          </div>
           <div class="score_input score_item">
-            <InputNumber
-              :min="scroreStandard.s6.lowerLimit"
-              :max="scroreStandard.s6.point"
-              v-model="scroreStandard.s6.value"
-              v-if="scoreModal.isEdit"
-            />
-            <span v-else>
-              {{scroreStandard.s6.value}}
-            </span>
+            <div
+              class="child_desc2"
+              :key="index1"
+              v-for="(itemv, index1) in scroreStandard.s6.value"
+            >
+              <InputNumber
+                :min="0"
+                :max="scroreStandard.s6.child[index1].point"
+                v-model="scroreStandard.s6.value[index1]"
+                v-if="scoreModal.isEdit"
+              />
+              <span v-else>
+                {{itemv}}
+              </span>
+            </div>
           </div>
         </div>
         <!-- s7 -->
@@ -455,21 +543,34 @@
           <div class="score_standard score_item">{{scroreStandard.s7.title}}</div>
           <div class="score_desc score_desc_content">
             <div
-              v-for="(v, index) in scroreStandard.s7.desc"
+              class="child_desc"
+              v-for="(v, index) in scroreStandard.s7.child"
               :key="index"
-            >{{v}}</div>
+            >{{v.desc}}</div>
           </div>
-          <div class="score_range score_item">{{scroreStandard.s7.lowerLimit}} - {{scroreStandard.s7.point}}</div>
+          <div class="score_range score_item">
+            <div
+              class="child_desc2"
+              v-for="(v, index) in scroreStandard.s7.child"
+              :key="index"
+            >{{v.point}}</div>
+          </div>
           <div class="score_input score_item">
-            <InputNumber
-              :min="scroreStandard.s7.lowerLimit"
-              :max="scroreStandard.s7.point"
-              v-model="scroreStandard.s7.value"
-              v-if="scoreModal.isEdit"
-            />
-            <span v-else>
-              {{scroreStandard.s7.value}}
-            </span>
+            <div
+              class="child_desc2"
+              :key="index1"
+              v-for="(itemv, index1) in scroreStandard.s7.value"
+            >
+              <InputNumber
+                :min="0"
+                :max="scroreStandard.s7.child[index1].point"
+                v-model="scroreStandard.s7.value[index1]"
+                v-if="scoreModal.isEdit"
+              />
+              <span v-else>
+                {{itemv}}
+              </span>
+            </div>
           </div>
         </div>
         <!-- s8 -->
@@ -480,21 +581,34 @@
           <div class="score_standard score_item">{{scroreStandard.s8.title}}</div>
           <div class="score_desc score_desc_content">
             <div
-              v-for="(v, index) in scroreStandard.s8.desc"
+              class="child_desc"
+              v-for="(v, index) in scroreStandard.s8.child"
               :key="index"
-            >{{v}}</div>
+            >{{v.desc}}</div>
           </div>
-          <div class="score_range score_item">{{scroreStandard.s8.lowerLimit}} - {{scroreStandard.s8.point}}</div>
+          <div class="score_range score_item">
+            <div
+              class="child_desc2"
+              v-for="(v, index) in scroreStandard.s8.child"
+              :key="index"
+            >{{v.point}}</div>
+          </div>
           <div class="score_input score_item">
-            <InputNumber
-              :min="scroreStandard.s8.lowerLimit"
-              :max="scroreStandard.s8.point"
-              v-model="scroreStandard.s8.value"
-              v-if="scoreModal.isEdit"
-            />
-            <span v-else>
-              {{scroreStandard.s8.value}}
-            </span>
+            <div
+              class="child_desc2"
+              :key="index1"
+              v-for="(itemv, index1) in scroreStandard.s8.value"
+            >
+              <InputNumber
+                :min="0"
+                :max="scroreStandard.s8.child[index1].point"
+                v-model="scroreStandard.s8.value[index1]"
+                v-if="scoreModal.isEdit"
+              />
+              <span v-else>
+                {{itemv}}
+              </span>
+            </div>
           </div>
         </div>
         <!-- s9 -->
@@ -505,21 +619,34 @@
           <div class="score_standard score_item">{{scroreStandard.s9.title}}</div>
           <div class="score_desc score_desc_content">
             <div
-              v-for="(v, index) in scroreStandard.s9.desc"
+              class="child_desc"
+              v-for="(v, index) in scroreStandard.s9.child"
               :key="index"
-            >{{v}}</div>
+            >{{v.desc}}</div>
           </div>
-          <div class="score_range score_item">{{scroreStandard.s9.lowerLimit}} - {{scroreStandard.s9.point}}</div>
+          <div class="score_range score_item">
+            <div
+              class="child_desc2"
+              v-for="(v, index) in scroreStandard.s9.child"
+              :key="index"
+            >{{v.point}}</div>
+          </div>
           <div class="score_input score_item">
-            <InputNumber
-              :min="scroreStandard.s9.lowerLimit"
-              :max="scroreStandard.s9.point"
-              v-model="scroreStandard.s9.value"
-              v-if="scoreModal.isEdit"
-            />
-            <span v-else>
-              {{scroreStandard.s9.value}}
-            </span>
+            <div
+              class="child_desc2"
+              :key="index1"
+              v-for="(itemv, index1) in scroreStandard.s9.value"
+            >
+              <InputNumber
+                :min="0"
+                :max="scroreStandard.s9.child[index1].point"
+                v-model="scroreStandard.s9.value[index1]"
+                v-if="scoreModal.isEdit"
+              />
+              <span v-else>
+                {{itemv}}
+              </span>
+            </div>
           </div>
         </div>
         <!-- s10 -->
@@ -530,21 +657,34 @@
           <div class="score_standard score_item">{{scroreStandard.s10.title}}</div>
           <div class="score_desc score_desc_content">
             <div
-              v-for="(v, index) in scroreStandard.s10.desc"
+              class="child_desc"
+              v-for="(v, index) in scroreStandard.s10.child"
               :key="index"
-            >{{v}}</div>
+            >{{v.desc}}</div>
           </div>
-          <div class="score_range score_item">{{scroreStandard.s10.lowerLimit}} - {{scroreStandard.s10.point}}</div>
+          <div class="score_range score_item">
+            <div
+              class="child_desc2"
+              v-for="(v, index) in scroreStandard.s10.child"
+              :key="index"
+            >{{v.point}}</div>
+          </div>
           <div class="score_input score_item">
-            <InputNumber
-              :min="scroreStandard.s10.lowerLimit"
-              :max="scroreStandard.s10.point"
-              v-model="scroreStandard.s10.value"
-              v-if="scoreModal.isEdit"
-            />
-            <span v-else>
-              {{scroreStandard.s10.value}}
-            </span>
+            <div
+              class="child_desc2"
+              :key="index1"
+              v-for="(itemv, index1) in scroreStandard.s10.value"
+            >
+              <InputNumber
+                :min="0"
+                :max="scroreStandard.s10.child[index1].point"
+                v-model="scroreStandard.s10.value[index1]"
+                v-if="scoreModal.isEdit"
+              />
+              <span v-else>
+                {{itemv}}
+              </span>
+            </div>
           </div>
         </div>
         <div class="score_total">
@@ -597,44 +737,64 @@
 <script>
 import { getMatchid } from '../../config/common'
 export default {
-  name: "preview",
+  name: 'preview',
   computed: {
     getScoreTotal () {
       let total = 0
       let info = this.scroreStandard
       if (info.s1) {
-        total = total + info.s1.value
+        info.s1.value.map(v => {
+          total = total + v
+        })
       }
       if (info.s2) {
-        total = total + info.s2.value
+        info.s2.value.map(v => {
+          total = total + v
+        })
       }
       if (info.s3) {
-        total = total + info.s3.value
+        info.s3.value.map(v => {
+          total = total + v
+        })
       }
       if (info.s4) {
-        total = total + info.s4.value
+        info.s4.value.map(v => {
+          total = total + v
+        })
       }
       if (info.s5) {
-        total = total + info.s5.value
+        info.s5.value.map(v => {
+          total = total + v
+        })
       }
       if (info.s6) {
-        total = total + info.s6.value
+        info.s6.value.map(v => {
+          total = total + v
+        })
       }
       if (info.s7) {
-        total = total + info.s7.value
+        info.s7.value.map(v => {
+          total = total + v
+        })
       }
       if (info.s8) {
-        total = total + info.s8.value
+        info.s8.value.map(v => {
+          total = total + v
+        })
       }
       if (info.s9) {
-        total = total + info.s9.value
+        info.s9.value.map(v => {
+          total = total + v
+        })
       }
       if (info.s10) {
-        total = total + info.s10.value
+        info.s10.value.map(v => {
+          total = total + v
+        })
       }
 
       return total
-    },
+    }
   },
   data () {
     return {
@@ -654,22 +814,23 @@ export default {
       scroreStandard: {},
       workScore: {},
       phptTime: 0,
-      isEditJudge: false,
+      isEditJudge: false
     }
   },
   async created () {
     if (this.queryId) {
+      this.getScore()
       await this.getPhpTime()
       this.getMatchTime()
       this.getInfo()
-      this.getScore()
     }
   },
   methods: {
     // 评委提交作品的打分(c30206)
     saveProcess () {
       if (!this.scoreModal.isEdit) {
-        return this.scoreModal.isEdit = true
+        this.scoreModal.isEdit = true
+        return
       }
       let info = this.scroreStandard
       let that = this
@@ -681,11 +842,15 @@ export default {
       // 判断值
       let isTrue = true
       Object.keys(info).map(function (key, index) {
-        if (info[key].value > info[key].point || info[key].value < info[key].lowerLimit) {
-          that.$Message.warning(`【${info[key].title}】 超出分数范围，请修改！`)
-          isTrue = false
-        }
-      });
+        let arr1 = info[key].value
+        let arr2 = info[key].child
+        arr1.map((vv, index) => {
+          if (vv > arr2[index].point) {
+            that.$Message.warning(`【${arr2[index].desc}】 超出分数范围，请修改！`)
+            isTrue = false
+          }
+        })
+      })
       if (!isTrue) {
         return false
       }
@@ -738,6 +903,13 @@ export default {
           this.$Message.error(err.message)
         })
     },
+    showImg6 (index, data) {
+      this.$hevueImgPreview({
+        multiple: true,
+        nowImgIndex: index,
+        imgList: data
+      })
+    },
     // 单个作品
     getInfo () {
       this.$ajax(this, {
@@ -750,7 +922,7 @@ export default {
           this.namechs = res.data.namechs
           this.nameen = res.data.nameen
           this.configLists = res.data.items
-          console.log('作品信息', res.data)
+          // console.log('作品信息', res.data)
           document.title = res.data.namechs
           let info = res.data
           this.getStandard(info.c1, info.c2, info.c3, info.c4)
@@ -775,7 +947,7 @@ export default {
           this.$Message.error(err.message)
         })
     },
-    // 获取评委对单个作品的评分(c30204)
+    // 获取评委对单个作品的评分(c30204: this.queryId * 1)
     getScore () {
       this.$ajax(this, {
         data: {
@@ -787,7 +959,7 @@ export default {
           console.log('单个作品的评分', res)
           this.workScore = res.data
           this.scoreModal.comment = res.data.comment
-          this.scoreModal.isEdit = false
+          this.scoreModal.isEdit = true
         })
         .catch(err => {
           this.$Message.error(err.message)
@@ -802,19 +974,19 @@ export default {
           c1,
           c2,
           c3,
-          c4,
+          c4
         }
       })
         .then(res => {
-          console.log('类型的评审标准', res)
+          // console.log('类型的评审标准', res)
           let info = res.data
           // 计算分数范围
           Object.keys(info).map(function (key, index) {
             info[key]['lowerLimit'] = (info[key].point * 0.2).toFixed(0) * 1
             info[key]['value'] = that.workScore[key]
-          });
+          })
           this.scroreStandard = res.data
-          console.log(this.scroreStandard)
+          console.log('类型的评审标准', this.scroreStandard)
         })
         .catch(err => {
           this.$Message.error(err.message)
@@ -845,21 +1017,18 @@ export default {
         }
       })
         .then(res => {
-          console.log(res.data)
-          console.log(this.phptTime)
           if (res.data) {
             if (res.data.scoreend > this.phptTime && this.phptTime > res.data.scorebegin) {
               this.isEditJudge = true
             } else {
               this.isEditJudge = false
             }
-            console.log('this.isEditJudge', this.isEditJudge)
           }
         })
         .catch(err => {
           this.$Message.error(err.message)
         })
-    },
+    }
   }
 }
 </script>
@@ -880,6 +1049,13 @@ export default {
   line-height: 36px;
   border-bottom: 1px solid #ececec;
   margin-top: 20px;
+}
+.main_title11 {
+  width: 100%;
+  height: 36px;
+  line-height: 36px;
+  margin-top: 20px;
+  padding-left: 6px;
 }
 .margin_left {
   margin-left: 36px;
@@ -925,26 +1101,56 @@ export default {
 .score_standard {
   width: 120px;
   border-left: 1px solid #e8eaec;
+  font-size: 12px !important;
+  color: #2e2cff;
 }
 .score_desc {
   width: 500px;
 }
 .score_desc_content {
-  padding: 10px 10px;
+  /* padding: 10px 10px; */
   border-right: 1px solid #e8eaec;
-  border-bottom: 1px solid #e8eaec;
+  /* border-bottom: 1px solid #e8eaec; */
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
+.top_h {
+  font-size: 16px !important;
+  padding: 8px 0;
+  color: #515a6e;
+}
+.child_desc {
+  border-bottom: 1px solid #e8eaec;
+  height: 33px;
+  line-height: 33px;
+  padding-left: 10px;
+}
+.child_desc2 {
+  border-bottom: 1px solid #e8eaec;
+  height: 33px;
+  line-height: 33px;
+  padding-left: 10px;
+  width: 100%;
+  text-align: center;
+}
+.child_desc3 {
+  height: 33px;
+  line-height: 33px;
+  padding-left: 10px;
+  width: 100%;
+  text-align: center;
+}
 .score_input {
   width: 130px;
+  flex-direction: column;
 }
 .score_range {
   width: 110px;
+  flex-direction: column;
 }
 .score_item {
-  padding: 10px 0px;
+  /* padding: 6px 0px; */
   font-size: 16px;
   display: flex;
   align-items: center;
