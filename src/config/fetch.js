@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import axios from 'axios'
 // axios.defaults.withCredentials = true
+const BASE_API = 'http://reard.liuyishou.vip/Server/index.php'
 let $axios = axios.create({
-  baseURL: process.env.BASE_API,
+  baseURL: BASE_API,
   // withCredentials: true,
   timeout: 30000000
 })
