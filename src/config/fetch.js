@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import axios from 'axios'
 // axios.defaults.withCredentials = true
-const BASE_API = 'http://reard.liuyishou.vip/Server/index.php'
+// const BASE_API = 'http://reard.liuyishou.vip/Server/index.php'
+const BASE_API = 'http://submit.reardatchina.com/server/index.php'
 let $axios = axios.create({
   baseURL: BASE_API,
   // withCredentials: true,

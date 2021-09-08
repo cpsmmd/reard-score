@@ -108,7 +108,7 @@
                 :key="index6"
                 alt=""
                 @click="showImg6(index6, item.value.image)"
-                style="width: 100%;"
+                style="width: 100%;cursor: pointer;"
               >
             </div>
           </div>
@@ -134,7 +134,7 @@
                   :key="index7"
                   @click="showImg6(index7, item.value.image)"
                   alt=""
-                  style="width: auto;max-width:100%;"
+                  style="width: auto;max-width:100%;cursor: pointer;"
                 >
               </div>
             </div>
@@ -303,9 +303,18 @@
       <div class="score_content">
         <div class="header_tab">
           <div class="score_standard score_item top_h">评审纬度</div>
-          <div class="score_desc score_item top_h">维度提示，但并不仅限于此</div>
-          <div class="score_range score_item top_h">分数上限</div>
-          <div class="score_input score_item top_h">评分</div>
+          <div
+            style="border-bottom: 1px solid #e8eaec"
+            class="score_desc score_item top_h"
+          >评审维度概括提示</div>
+          <div
+            style="border-bottom: 1px solid #e8eaec"
+            class="score_range score_item top_h"
+          >分数上限</div>
+          <div
+            style="border-bottom: 1px solid #e8eaec"
+            class="score_input score_item top_h"
+          >评分</div>
         </div>
         <!-- s1 -->
         <div
@@ -333,11 +342,20 @@
               :key="index1"
               v-for="(itemv, index1) in scroreStandard.s1.value"
             >
-              <InputNumber
+              <!-- <InputNumber
                 :min="0"
                 :max="scroreStandard.s1.child[index1].point"
                 v-model="scroreStandard.s1.value[index1]"
                 v-if="scoreModal.isEdit"
+                style="width: 60px;margin-bottom:4px;"
+                size="small"
+              /> -->
+              <Input
+                placeholder=""
+                v-model="scroreStandard.s1.value[index1]"
+                v-if="scoreModal.isEdit"
+                style="width: 60px;margin-bottom:4px;"
+                size="small"
               />
               <span v-else>
                 {{itemv}}
@@ -371,11 +389,20 @@
               :key="index1"
               v-for="(itemv, index1) in scroreStandard.s2.value"
             >
-              <InputNumber
+              <!-- <InputNumber
                 :min="0"
                 :max="scroreStandard.s2.child[index1].point"
                 v-model="scroreStandard.s2.value[index1]"
                 v-if="scoreModal.isEdit"
+                style="width: 60px;margin-bottom:4px;"
+                size="small"
+              /> -->
+              <Input
+                placeholder=""
+                v-model="scroreStandard.s2.value[index1]"
+                v-if="scoreModal.isEdit"
+                style="width: 60px;margin-bottom:4px;"
+                size="small"
               />
               <span v-else>
                 {{itemv}}
@@ -409,11 +436,20 @@
               :key="index1"
               v-for="(itemv, index1) in scroreStandard.s3.value"
             >
-              <InputNumber
+              <!-- <InputNumber
                 :min="0"
                 :max="scroreStandard.s3.child[index1].point"
                 v-model="scroreStandard.s3.value[index1]"
                 v-if="scoreModal.isEdit"
+                style="width: 60px;margin-bottom:4px;"
+                size="small"
+              /> -->
+              <Input
+                placeholder=""
+                v-model="scroreStandard.s3.value[index1]"
+                v-if="scoreModal.isEdit"
+                style="width: 60px;margin-bottom:4px;"
+                size="small"
               />
               <span v-else>
                 {{itemv}}
@@ -447,11 +483,20 @@
               :key="index1"
               v-for="(itemv, index1) in scroreStandard.s4.value"
             >
-              <InputNumber
+              <!-- <InputNumber
                 :min="0"
                 :max="scroreStandard.s4.child[index1].point"
                 v-model="scroreStandard.s4.value[index1]"
                 v-if="scoreModal.isEdit"
+                style="width: 60px;margin-bottom:4px;"
+                size="small"
+              /> -->
+              <Input
+                placeholder=""
+                v-model="scroreStandard.s4.value[index1]"
+                v-if="scoreModal.isEdit"
+                style="width: 60px;margin-bottom:4px;"
+                size="small"
               />
               <span v-else>
                 {{itemv}}
@@ -485,11 +530,20 @@
               :key="index1"
               v-for="(itemv, index1) in scroreStandard.s5.value"
             >
-              <InputNumber
+              <!-- <InputNumber
                 :min="0"
                 :max="scroreStandard.s5.child[index1].point"
                 v-model="scroreStandard.s5.value[index1]"
                 v-if="scoreModal.isEdit"
+                style="width: 60px;margin-bottom:4px;"
+                size="small"
+              /> -->
+              <Input
+                placeholder=""
+                v-model="scroreStandard.s5.value[index1]"
+                v-if="scoreModal.isEdit"
+                style="width: 60px;margin-bottom:4px;"
+                size="small"
               />
               <span v-else>
                 {{itemv}}
@@ -523,11 +577,20 @@
               :key="index1"
               v-for="(itemv, index1) in scroreStandard.s6.value"
             >
-              <InputNumber
+              <!-- <InputNumber
                 :min="0"
                 :max="scroreStandard.s6.child[index1].point"
                 v-model="scroreStandard.s6.value[index1]"
                 v-if="scoreModal.isEdit"
+                style="width: 60px;margin-bottom:4px;"
+                size="small"
+              /> -->
+              <Input
+                placeholder=""
+                v-model="scroreStandard.s6.value[index1]"
+                v-if="scoreModal.isEdit"
+                style="width: 60px;margin-bottom:4px;"
+                size="small"
               />
               <span v-else>
                 {{itemv}}
@@ -561,11 +624,20 @@
               :key="index1"
               v-for="(itemv, index1) in scroreStandard.s7.value"
             >
-              <InputNumber
+              <!-- <InputNumber
                 :min="0"
                 :max="scroreStandard.s7.child[index1].point"
                 v-model="scroreStandard.s7.value[index1]"
                 v-if="scoreModal.isEdit"
+                style="width: 60px;margin-bottom:4px;"
+                size="small"
+              /> -->
+              <Input
+                placeholder=""
+                v-model="scroreStandard.s7.value[index1]"
+                v-if="scoreModal.isEdit"
+                style="width: 60px;margin-bottom:4px;"
+                size="small"
               />
               <span v-else>
                 {{itemv}}
@@ -599,11 +671,20 @@
               :key="index1"
               v-for="(itemv, index1) in scroreStandard.s8.value"
             >
-              <InputNumber
+              <!-- <InputNumber
                 :min="0"
                 :max="scroreStandard.s8.child[index1].point"
                 v-model="scroreStandard.s8.value[index1]"
                 v-if="scoreModal.isEdit"
+                style="width: 60px;margin-bottom:4px;"
+                size="small"
+              /> -->
+              <Input
+                placeholder=""
+                v-model="scroreStandard.s8.value[index1]"
+                v-if="scoreModal.isEdit"
+                style="width: 60px;margin-bottom:4px;"
+                size="small"
               />
               <span v-else>
                 {{itemv}}
@@ -637,11 +718,20 @@
               :key="index1"
               v-for="(itemv, index1) in scroreStandard.s9.value"
             >
-              <InputNumber
+              <!-- <InputNumber
                 :min="0"
                 :max="scroreStandard.s9.child[index1].point"
                 v-model="scroreStandard.s9.value[index1]"
                 v-if="scoreModal.isEdit"
+                style="width: 60px;margin-bottom:4px;"
+                size="small"
+              /> -->
+              <Input
+                placeholder=""
+                v-model="scroreStandard.s9.value[index1]"
+                v-if="scoreModal.isEdit"
+                style="width: 60px;margin-bottom:4px;"
+                size="small"
               />
               <span v-else>
                 {{itemv}}
@@ -675,11 +765,20 @@
               :key="index1"
               v-for="(itemv, index1) in scroreStandard.s10.value"
             >
-              <InputNumber
+              <!-- <InputNumber
                 :min="0"
                 :max="scroreStandard.s10.child[index1].point"
                 v-model="scroreStandard.s10.value[index1]"
                 v-if="scoreModal.isEdit"
+                style="width: 60px;margin-bottom:4px;"
+                size="small"
+              /> -->
+              <Input
+                placeholder=""
+                v-model="scroreStandard.s10.value[index1]"
+                v-if="scoreModal.isEdit"
+                style="width: 60px;margin-bottom:4px;"
+                size="small"
               />
               <span v-else>
                 {{itemv}}
@@ -688,7 +787,9 @@
           </div>
         </div>
         <div class="score_total">
-          总分： <span>{{getScoreTotal}}</span></div>
+          <span style="float: left;color: #FF6600;font-size: 14px;margin-top:4px;">*可打 0 分</span>
+          总分： <span>{{getScoreTotal}}</span>
+        </div>
         <div style="margin-top:20px;">
           <Input
             v-model="scoreModal.comment"
@@ -700,21 +801,21 @@
         </div>
       </div>
       <div
-        style="text-align:center;margin:10px 0;"
+        style="text-align:left;margin:10px 0;"
         slot="footer"
       >
+        <Button
+          size="large"
+          @click="goBack"
+        >退出评分页面</Button>
         <Button
           type="primary"
           size="large"
           class="reard_btn_o"
           :disabled="!isEditJudge"
           @click="saveProcess"
+          style="float:right;width:400px;"
         >{{scoreModal.isEdit?'确定评分':'修改评分'}}</Button>
-        <Button
-          size="large"
-          style="margin-left:40px;"
-          @click="goBack"
-        >退出评分页面</Button>
       </div>
     </Modal>
     <Affix
@@ -744,52 +845,52 @@ export default {
       let info = this.scroreStandard
       if (info.s1) {
         info.s1.value.map(v => {
-          total = total + v
+          total = total + ~~v
         })
       }
       if (info.s2) {
         info.s2.value.map(v => {
-          total = total + v
+          total = total + ~~v
         })
       }
       if (info.s3) {
         info.s3.value.map(v => {
-          total = total + v
+          total = total + ~~v
         })
       }
       if (info.s4) {
         info.s4.value.map(v => {
-          total = total + v
+          total = total + ~~v
         })
       }
       if (info.s5) {
         info.s5.value.map(v => {
-          total = total + v
+          total = total + ~~v
         })
       }
       if (info.s6) {
         info.s6.value.map(v => {
-          total = total + v
+          total = total + ~~v
         })
       }
       if (info.s7) {
         info.s7.value.map(v => {
-          total = total + v
+          total = total + ~~v
         })
       }
       if (info.s8) {
         info.s8.value.map(v => {
-          total = total + v
+          total = total + ~~v
         })
       }
       if (info.s9) {
         info.s9.value.map(v => {
-          total = total + v
+          total = total + ~~v
         })
       }
       if (info.s10) {
         info.s10.value.map(v => {
-          total = total + v
+          total = total + ~~v
         })
       }
 
@@ -809,7 +910,8 @@ export default {
         show: false,
         isEdit: false,
         comment: '',
-        isComment: true
+        isComment: true,
+        modifytime: 0
       },
       scroreStandard: {},
       workScore: {},
@@ -845,15 +947,29 @@ export default {
         let arr1 = info[key].value
         let arr2 = info[key].child
         arr1.map((vv, index) => {
+          if (vv === '') {
+            that.$Message.warning(`请填写【${arr2[index].desc}】分数 ！`)
+            isTrue = false
+          }
           if (vv > arr2[index].point) {
             that.$Message.warning(`【${arr2[index].desc}】 超出分数范围，请修改！`)
             isTrue = false
           }
+          if (vv !== '' && isNaN(vv)) {
+            that.$Message.warning(`【${arr2[index].desc}】格式不正确，请填写数字！`)
+            isTrue = false
+          }
+          vv = vv * 1
         })
       })
       if (!isTrue) {
         return false
       }
+      Object.keys(info).map(function (key, index) {
+        info[key].value.map((vv, index) => {
+          vv = vv * 1
+        })
+      })
       if (info.s1) {
         data.s1 = info.s1.value
       }
@@ -960,6 +1076,7 @@ export default {
           this.workScore = res.data
           this.scoreModal.comment = res.data.comment
           this.scoreModal.isEdit = true
+          this.scoreModal.modifytime = res.data.modifytime
         })
         .catch(err => {
           this.$Message.error(err.message)
@@ -983,7 +1100,17 @@ export default {
           // 计算分数范围
           Object.keys(info).map(function (key, index) {
             info[key]['lowerLimit'] = (info[key].point * 0.2).toFixed(0) * 1
-            info[key]['value'] = that.workScore[key]
+            // !此处判断当this.scoreModal.modifytime === 0时 值为空
+            let arr = that.workScore[key]
+            if (that.scoreModal.modifytime === 0) {
+              let arr2 = []
+              arr.map(v => {
+                arr2.push('')
+              })
+              info[key]['value'] = arr2
+            } else {
+              info[key]['value'] = arr
+            }
           })
           this.scroreStandard = res.data
           console.log('类型的评审标准', this.scroreStandard)
@@ -1103,6 +1230,7 @@ export default {
   border-left: 1px solid #e8eaec;
   font-size: 12px !important;
   color: #2e2cff;
+  border-bottom: 1px solid #e8eaec;
 }
 .score_desc {
   width: 500px;
@@ -1156,13 +1284,14 @@ export default {
   align-items: center;
   justify-content: center;
   border-right: 1px solid #e8eaec;
-  border-bottom: 1px solid #e8eaec;
+  /* border-bottom: 1px solid #e8eaec; */
 }
 .score_total {
   padding: 10px 20px;
   text-align: right;
   font-size: 18px;
   border: 1px solid #e8eaec;
+  border-top: 0;
 }
 </style>
 <style>

@@ -2,7 +2,7 @@
   <div>
     <h1 class="page_head_h1">
       <Breadcrumb>
-        <BreadcrumbItem to="/menu/works">作品列表</BreadcrumbItem>
+        <BreadcrumbItem to="/menu/works">需打分列表</BreadcrumbItem>
         <BreadcrumbItem>评分详情</BreadcrumbItem>
       </Breadcrumb>
     </h1>
@@ -19,6 +19,13 @@
         fix
         v-if="spinShow"
       ></Spin>
+      <div style="margin: 10px 0;"><Button
+          @click="update"
+          type="primary"
+        >
+          刷新数据
+          <Icon type="md-refresh" />
+        </Button></div>
       <Table
         border
         :columns="columns"
@@ -74,6 +81,20 @@ export default {
           }
         },
         {
+          title: '评分状态',
+          align: 'center',
+          key: 'modifytime',
+          render: (h, params) => {
+            return h('div', [
+              h('Tag', {
+                props: {
+                  color: params.row.modifytime === 0 ? 'volcano' : 'green'
+                }
+              }, params.row.modifytime === 0 ? '未打分' : '已打分')
+            ])
+          }
+        },
+        {
           title: '操作',
           key: 'handel',
           align: 'center',
@@ -88,7 +109,7 @@ export default {
                     this.preview(params.row)
                   }
                 }
-              }, '评分')
+              }, '评分/修改')
             ])
           }
         }
@@ -108,6 +129,12 @@ export default {
     this.getMatchTime()
   },
   methods: {
+    async update () {
+      this.getWorkLists()
+      let info = await this.getTypeProcess()
+      this.curTypeInfo.taskfinish = info.taskfinish
+      this.curTypeInfo.taskall = info.taskall
+    },
     // 获取某个分类评委负责的作品列表(c30202)
     getWorkLists () {
       this.spinShow = true
@@ -195,6 +222,26 @@ export default {
         .catch(err => {
           this.$Message.error(err.message)
         })
+    },
+    // 获取分类进度
+    getTypeProcess () {
+      return new Promise(resolve => {
+        this.$ajax(this, {
+          data: {
+            op: 'c30207',
+            c1: this.curTypeInfo.c1,
+            c2: this.curTypeInfo.c2,
+            c3: this.curTypeInfo.c3,
+            c4: this.curTypeInfo.c4
+          }
+        }).then(result => {
+          let list = result.data
+          resolve(list)
+        })
+          .catch(err => {
+            this.$Message.error(err.message)
+          })
+      })
     }
   }
 }
